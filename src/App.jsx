@@ -2,7 +2,6 @@
 import {
   profile,
   navLinks,
-  services,
   skills,
   projects,
   experience,
@@ -46,6 +45,18 @@ const Icon = {
       <path d="M10 14 21 3" />
     </svg>
   ),
+  Play: (p) => (
+    <svg viewBox="0 0 24 24" fill="currentColor" {...p}>
+      <path d="M8 5v14l11-7z" />
+    </svg>
+  ),
+  Download: (p) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+      <path d="m7 10 5 5 5-5" />
+      <path d="M12 15V3" />
+    </svg>
+  ),
   Arrow: (p) => (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}>
       <path d="M5 12h14" />
@@ -67,39 +78,6 @@ const Icon = {
       <path d="M18 6 6 18M6 6l12 12" />
     </svg>
   ),
-  Code: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}>
-      <path d="m16 18 6-6-6-6" />
-      <path d="m8 6-6 6 6 6" />
-    </svg>
-  ),
-  Bolt: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}>
-      <path d="M13 2 3 14h9l-1 8 10-12h-9l1-8z" />
-    </svg>
-  ),
-  Video: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}>
-      <path d="m22 8-6 4 6 4V8Z" />
-      <rect x="2" y="6" width="14" height="12" rx="2" />
-    </svg>
-  ),
-  Sparkles: (p) => (
-    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" {...p}>
-      <path d="m12 3-1.9 5.8a2 2 0 0 1-1.3 1.3L3 12l5.8 1.9a2 2 0 0 1 1.3 1.3L12 21l1.9-5.8a2 2 0 0 1 1.3-1.3L21 12l-5.8-1.9a2 2 0 0 1-1.3-1.3L12 3Z" />
-      <path d="M5 3v4" />
-      <path d="M19 17v4" />
-      <path d="M3 5h4" />
-      <path d="M17 19h4" />
-    </svg>
-  ),
-};
-
-const serviceIcons = {
-  code: Icon.Code,
-  bolt: Icon.Bolt,
-  video: Icon.Video,
-  sparkles: Icon.Sparkles,
 };
 
 /* ============================ SHARED STYLES ============================ */
@@ -290,7 +268,7 @@ function Hero() {
           </span>
         </Reveal>
 
-        <Reveal delay={80}>
+        <Reveal delay={60}>
           <h1 className="mt-6 text-4xl font-extrabold tracking-tight text-slate-900 sm:text-6xl lg:text-7xl">
             Ravi{" "}
             <span className="bg-gradient-to-r from-violet-600 via-fuchsia-600 to-pink-600 bg-clip-text text-transparent">
@@ -299,7 +277,7 @@ function Hero() {
           </h1>
         </Reveal>
 
-        <Reveal delay={120}>
+        <Reveal delay={100}>
           <p className="mt-5 text-xl font-bold text-slate-800 sm:text-2xl lg:text-3xl">
             Full Stack Developer
             <span className="mx-2 text-violet-400">·</span>
@@ -313,21 +291,21 @@ function Hero() {
           </p>
         </Reveal>
 
-        <Reveal delay={160}>
-          <div className="mt-4 flex flex-wrap items-center gap-x-4 gap-y-2">
-            <span className="inline-flex items-center gap-1.5 text-base font-medium text-slate-700">
-              <Icon.Pin className="h-4 w-4 text-violet-600" />
-              {profile.location}
-            </span>
-            <span className="hidden h-1 w-1 rounded-full bg-violet-500 sm:block" />
-            <span className="text-base font-medium text-slate-700">
-              2+ years hands-on experience
-            </span>
-          </div>
+        <Reveal delay={140}>
+          <p className="mt-2 text-sm font-medium text-slate-600">
+            {profile.locationLine}
+          </p>
         </Reveal>
 
-        <Reveal delay={210}>
-          <p className="mt-6 max-w-2xl text-base leading-relaxed text-slate-700 sm:text-lg">
+        <Reveal delay={180}>
+          <p className="mt-4 inline-flex items-center gap-1.5 text-base font-semibold text-slate-700">
+            <Icon.Check className="h-4 w-4 text-fuchsia-600" />
+            {profile.yearsLine}
+          </p>
+        </Reveal>
+
+        <Reveal delay={220}>
+          <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-700 sm:text-lg">
             {profile.tagline}
           </p>
         </Reveal>
@@ -338,7 +316,18 @@ function Hero() {
               View Projects
               <Icon.Arrow className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
             </a>
-            <a href="#contact" className={btnGhost}>Get in touch</a>
+            <a
+              href={profile.resumeUrl}
+              download
+              className={btnGhost}
+            >
+              <Icon.Download className="h-4 w-4" />
+              Download Resume
+            </a>
+            <a href={`mailto:${profile.email}`} className={btnGhost}>
+              <Icon.Mail className="h-4 w-4" />
+              Email Me
+            </a>
           </div>
         </Reveal>
 
@@ -399,6 +388,16 @@ function About() {
               <p>{paragraph}</p>
             </Reveal>
           ))}
+
+          {profile.gapNote && (
+            <Reveal delay={200}>
+              <div className="rounded-xl border-l-4 border-violet-500 bg-violet-50 p-5">
+                <p className="text-sm leading-relaxed text-slate-800">
+                  {profile.gapNote}
+                </p>
+              </div>
+            </Reveal>
+          )}
         </div>
 
         <Reveal delay={150}>
@@ -428,53 +427,6 @@ function About() {
   );
 }
 
-/* ============================== SERVICES ============================== */
-function Services() {
-  return (
-    <Section
-      id="services"
-      eyebrow="What I do"
-      title="Services I offer"
-      description="From full-stack web apps to live video pipelines and AI-powered tools — here's how I can help."
-    >
-      <div className="grid gap-5 sm:grid-cols-2">
-        {services.map((service, index) => {
-          const ServiceIcon = serviceIcons[service.icon] || Icon.Code;
-          return (
-            <Reveal key={service.title} delay={index * 80}>
-              <div className="group h-full rounded-2xl border-2 border-slate-200 bg-white p-6 shadow-lg shadow-slate-200/70 transition duration-300 hover:-translate-y-1 hover:border-violet-400 hover:shadow-xl hover:shadow-violet-500/20">
-                <div className="flex items-start gap-4">
-                  <span className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-gradient-to-br from-violet-600 to-fuchsia-600 text-white shadow-md shadow-violet-500/40 transition group-hover:scale-110">
-                    <ServiceIcon className="h-6 w-6" />
-                  </span>
-                  <div className="min-w-0">
-                    <h3 className="text-base font-bold text-slate-900">
-                      {service.title}
-                    </h3>
-                    <p className="mt-2 text-sm leading-relaxed text-slate-700">
-                      {service.description}
-                    </p>
-                    <ul className="mt-4 flex flex-wrap gap-1.5">
-                      {service.tech.map((t) => (
-                        <li
-                          key={t}
-                          className="rounded-full border border-violet-200 bg-violet-100 px-2.5 py-1 text-[11px] font-semibold text-violet-800"
-                        >
-                          {t}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </Reveal>
-          );
-        })}
-      </div>
-    </Section>
-  );
-}
-
 /* =============================== SKILLS =============================== */
 function Skills() {
   return (
@@ -484,6 +436,17 @@ function Skills() {
       title="Tech I work with"
       description="The tools and technologies I use to design, build, deploy, and scale full-stack applications."
     >
+      <Reveal>
+        <div className="mb-8 rounded-2xl border-2 border-violet-300 bg-gradient-to-r from-violet-50 to-fuchsia-50 p-5 sm:p-6">
+          <p className="text-xs font-bold uppercase tracking-[0.15em] text-violet-700">
+            Primary Stack
+          </p>
+          <p className="mt-2 text-base font-bold text-slate-900 sm:text-lg">
+            {profile.primaryStack.join("  ·  ")}
+          </p>
+        </div>
+      </Reveal>
+
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
         {skills.map((group, index) => (
           <Reveal key={group.category} delay={index * 60}>
@@ -507,63 +470,91 @@ function Skills() {
   );
 }
 
+/* ============================== SCREENSHOT ============================== */
+function ProjectScreenshot({ project }) {
+  const [failed, setFailed] = useState(false);
+
+  if (!project.screenshot || failed) {
+    return (
+      <div className="mb-6 flex aspect-video w-full items-center justify-center rounded-xl border-2 border-dashed border-violet-200 bg-gradient-to-br from-violet-50 to-fuchsia-50">
+        <span className="bg-gradient-to-r from-violet-600 to-fuchsia-600 bg-clip-text text-5xl font-black text-transparent">
+          {project.title.charAt(0)}
+        </span>
+      </div>
+    );
+  }
+
+  return (
+    <div className="mb-6 overflow-hidden rounded-xl border-2 border-slate-200 bg-slate-100">
+      <img
+        src={project.screenshot}
+        alt={`${project.title} screenshot`}
+        className="aspect-video w-full object-cover"
+        loading="lazy"
+        onError={() => setFailed(true)}
+      />
+    </div>
+  );
+}
+
 /* ============================== PROJECTS ============================== */
+function getProjectActions(project) {
+  const all = [];
+  if (project.live) all.push({ type: "live", href: project.live, label: "Live Demo", icon: Icon.External });
+  if (project.demoUrl) all.push({ type: "demo", href: project.demoUrl, label: "Watch Demo", icon: Icon.Play });
+  if (project.github) all.push({ type: "github", href: project.github, label: "Source Code", icon: Icon.GitHub });
+
+  // Put the designated primary first
+  const primaryIdx = all.findIndex((a) => a.type === project.primaryAction);
+  const primary = primaryIdx >= 0 ? all[primaryIdx] : all[0];
+  const secondary = all.filter((a) => a !== primary);
+  return { primary, secondary };
+}
+
 function ProjectCard({ project, index }) {
+  const { primary, secondary } = getProjectActions(project);
+
   return (
     <Reveal delay={index * 80}>
       <article className="group relative overflow-hidden rounded-2xl border-2 border-slate-200 bg-white p-6 shadow-lg shadow-slate-200/70 transition duration-300 hover:border-violet-400 hover:shadow-2xl hover:shadow-violet-500/25 sm:p-8">
         <div className="relative">
-          <div className="flex flex-wrap items-start justify-between gap-4">
-            <div>
-              <h3 className="text-xl font-bold text-slate-900">{project.title}</h3>
-              <p className="mt-1 text-sm font-bold bg-gradient-to-r from-violet-700 to-fuchsia-600 bg-clip-text text-transparent">
-                {project.subtitle}
-              </p>
-            </div>
+          <ProjectScreenshot project={project} />
 
-            <div className="flex items-center gap-2">
-              {project.github && (
-                <a
-                  href={project.github}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  aria-label={`${project.title} source code`}
-                  className="grid h-9 w-9 place-items-center rounded-lg border-2 border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-violet-400 hover:bg-violet-50 hover:text-violet-700"
-                >
-                  <Icon.GitHub className="h-4 w-4" />
-                </a>
-              )}
-              {project.live && (
-                <a
-                  href={project.live}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                  aria-label={`${project.title} live demo`}
-                  className="grid h-9 w-9 place-items-center rounded-lg border-2 border-slate-300 bg-white text-slate-700 shadow-sm transition hover:border-violet-400 hover:bg-violet-50 hover:text-violet-700"
-                >
-                  <Icon.External className="h-4 w-4" />
-                </a>
-              )}
-            </div>
+          <div>
+            <h3 className="text-xl font-bold text-slate-900">{project.title}</h3>
+            <p className="mt-1 text-sm font-bold bg-gradient-to-r from-violet-700 to-fuchsia-600 bg-clip-text text-transparent">
+              {project.subtitle}
+            </p>
           </div>
 
-          <p className="mt-5 text-sm leading-relaxed text-slate-700">{project.description}</p>
+          <p className="mt-4 text-sm font-semibold leading-relaxed text-slate-800">
+            {project.headline}
+          </p>
 
           {project.impact?.length > 0 && (
-            <ul className="mt-5 flex flex-wrap gap-x-5 gap-y-2">
+            <ul className="mt-4 space-y-2">
               {project.impact.map((item) => (
                 <li
                   key={item}
-                  className="inline-flex items-center gap-1.5 text-xs font-semibold text-slate-800"
+                  className="flex items-start gap-2 text-sm leading-relaxed text-slate-700"
                 >
-                  <Icon.Check className="h-3.5 w-3.5 shrink-0 text-fuchsia-600" />
-                  {item}
+                  <Icon.Check className="mt-1 h-3.5 w-3.5 shrink-0 text-fuchsia-600" />
+                  <span>{item}</span>
                 </li>
               ))}
             </ul>
           )}
 
-          <ul className="mt-6 flex flex-wrap gap-2">
+          {project.challenge && (
+            <p className="mt-5 rounded-lg bg-slate-50 p-3 text-sm italic leading-relaxed text-slate-700">
+              <span className="font-bold not-italic text-slate-900">
+                Hardest part:{" "}
+              </span>
+              {project.challenge}
+            </p>
+          )}
+
+          <ul className="mt-5 flex flex-wrap gap-2">
             {project.tech.map((tech) => (
               <li
                 key={tech}
@@ -575,7 +566,7 @@ function ProjectCard({ project, index }) {
           </ul>
 
           {project.credentials && (
-            <div className="mt-6 rounded-xl border-2 border-violet-200 bg-violet-50 p-4">
+            <div className="mt-5 rounded-xl border-2 border-violet-200 bg-violet-50 p-4">
               <p className="text-[11px] font-bold uppercase tracking-[0.15em] text-violet-800">
                 Demo credentials
               </p>
@@ -588,33 +579,36 @@ function ProjectCard({ project, index }) {
           )}
 
           {project.note && (
-            <p className="mt-5 text-xs italic font-medium text-slate-600">{project.note}</p>
+            <p className="mt-4 text-xs italic font-medium text-slate-600">
+              {project.note}
+            </p>
           )}
 
-          {(project.live || project.github) && (
+          {(primary || secondary.length > 0) && (
             <div className="mt-6 flex flex-wrap gap-3">
-              {project.live && (
+              {primary && (
                 <a
-                  href={project.live}
+                  href={primary.href}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="inline-flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-violet-600 to-fuchsia-600 px-3.5 py-2 text-xs font-semibold text-white shadow-md shadow-violet-500/30 transition hover:shadow-lg hover:shadow-violet-500/50"
+                  className="group/btn inline-flex items-center gap-1.5 rounded-lg bg-gradient-to-r from-violet-600 to-fuchsia-600 px-4 py-2.5 text-sm font-semibold text-white shadow-md shadow-violet-500/30 transition hover:-translate-y-0.5 hover:shadow-lg hover:shadow-violet-500/50"
                 >
-                  Live demo
-                  <Icon.External className="h-3.5 w-3.5" />
+                  <primary.icon className="h-4 w-4" />
+                  {primary.label}
                 </a>
               )}
-              {project.github && (
+              {secondary.map((action) => (
                 <a
-                  href={project.github}
+                  key={action.href}
+                  href={action.href}
                   target="_blank"
                   rel="noreferrer noopener"
-                  className="inline-flex items-center gap-1.5 rounded-lg border-2 border-slate-300 bg-white px-3.5 py-2 text-xs font-semibold text-slate-800 shadow-sm transition hover:border-violet-400 hover:bg-violet-50 hover:text-violet-700"
+                  className="inline-flex items-center gap-1.5 rounded-lg border-2 border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 shadow-sm transition hover:-translate-y-0.5 hover:border-violet-400 hover:bg-violet-50 hover:text-violet-700"
                 >
-                  Source code
-                  <Icon.GitHub className="h-3.5 w-3.5" />
+                  <action.icon className="h-4 w-4" />
+                  {action.label}
                 </a>
-              )}
+              ))}
             </div>
           )}
         </div>
@@ -629,11 +623,11 @@ function Projects() {
       id="projects"
       eyebrow="Projects"
       title="Things I've built"
-      description="A selection of full-stack projects — from live video infrastructure to AI-powered automation."
+      description="A selection of full-stack projects — from live video infrastructure to AI-powered automation. Easiest-to-verify first."
     >
       <div className="space-y-6">
         {projects.map((project, index) => (
-          <ProjectCard key={project.title} project={project} index={index} />
+          <ProjectCard key={project.id} project={project} index={index} />
         ))}
       </div>
     </Section>
@@ -864,7 +858,6 @@ export default function App() {
       <main>
         <Hero />
         <About />
-        <Services />
         <Skills />
         <Projects />
         <Experience />
